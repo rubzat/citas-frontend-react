@@ -1,25 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useEffect, useState} from 'react';
+import {BrowserRouter as Router , Route, Switch} from 'react-router-dom'
+//Components
+import Pacientes from './components/Pacientes'
+import NuevaCita from './components/NuevaCita'
+import Cita from './components/Cita'
+import clienteAxios from './config/axios';
 
-function App() {
+
+function App(){
+  //State de la App
+  const [citas, guardarCitas] = useState([]);
+  const [consultar, guardarConsultar] = useState(true);
+
+  useEffect(()=>{
+    if(consultar){
+      const consultarApi = () =>{
+        clienteAxios.get('/patients').then((result) => {
+          //Agregar datos a State
+          guardarCitas(result.data)
+          guardarConsultar(false);
+        }).catch((err) => {
+          console.log(err)
+        });
+      };
+      consultarApi();
+    }
+  }, [consultar] );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route 
+          exact
+          path="/"
+          component={() => <Pacientes citas={citas} />}
+        />
+        <Route 
+          exact
+          path="/nueva"
+          component={() => <NuevaCita guardarConsultar={guardarConsultar}/>}
+        />
+         <Route 
+          exact
+          path="/cita/:id"
+          render={(props) => {
+            const cita = citas.filter(cita => cita._id === props.match.params.id)
+            console.log(cita)
+            return (
+              <Cita 
+              cita={cita[0]}
+              guardarConsultar={guardarConsultar}
+              />
+            );
+          }}
+        />
+      </Switch>
+    </Router>
   );
 }
 
