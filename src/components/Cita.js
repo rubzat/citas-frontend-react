@@ -9,7 +9,7 @@ const Cita = (props) => {
     return null;
   };
   //Extraer Datos
-  const {cita:{_id,name, date, hour, symptom}} = props
+  const {cita:{id,name, date, hour, symptom}} = props
   //Eliminar Cita
   const eliminarCita = id => {
     Swal.fire({
@@ -57,7 +57,7 @@ const Cita = (props) => {
                 {symptom}
               </p>
               <div className="">
-                <button type="button" className="text-uppercase py-2 my-3 px-5 font-weight-bold btn btn-danger col" onClick={ ()=> eliminarCita(_id)}>
+                <button type="button" className="text-uppercase py-2 my-3 px-5 font-weight-bold btn btn-danger col" onClick={ ()=> eliminarCita(id)}>
                 Eliminar &times;
                 </button>
               </div>

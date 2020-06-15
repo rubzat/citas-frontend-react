@@ -43,7 +43,7 @@ function App(){
           exact
           path="/cita/:id"
           render={(props) => {
-            const cita = citas.filter(cita => cita._id === props.match.params.id)
+            const cita = citas.filter(cita => cita.id === props.match.params.id)
             console.log(cita)
             return (
               <Cita 

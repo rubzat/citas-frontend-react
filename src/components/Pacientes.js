@@ -14,7 +14,7 @@ const Pacientes = ({citas}) => {
           <div className="col-md-8 mx-auto">
             <div className="list-group">
               {citas.map(cita => (
-                  <Link to={`/cita/${cita._id}`} key={cita._id} className="p-5 list-group-item list-group-item-action flex-column aling-items-start">
+                  <Link to={`/cita/${cita.id}`} key={cita.id} className="p-5 list-group-item list-group-item-action flex-column aling-items-start">
                     <div className="d-flex w-100 justify-content-between">
                       <h3 className="mb-3">{cita.name}</h3>
                       <small className="fecha-alta">
